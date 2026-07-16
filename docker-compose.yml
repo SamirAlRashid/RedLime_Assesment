@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+
+  site1:
+    build: ./site_1
+    container_name: site1
+
+  site2:
+    build: ./site_2
+    container_name: site2
+
+  nginx:
+    image: nginx:alpine
+    container_name: reverse_proxy
+
+    ports:
+      - "8080:80"
+
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+
+    depends_on:
+      - site1
+      - site2
